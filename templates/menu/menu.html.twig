@@ -1,0 +1,42 @@
+
+	<header>
+		<nav>
+			<ul>
+				<h2>article</h2>
+				<a href="{{ path('blog_create') }}">
+					<li>create</li>
+				</a>
+				<a href="{{ path('blog_read', {'id': 'x'}) }}">
+					<li>read</li>
+				</a>
+				<a href="{{ path('blog_read_all') }}">
+					<li>read all</li>
+				</a>
+				<a href="{{ path('blog_update', {'id': 'x'}) }}">
+					<li>update</li>
+				</a>
+				<a href="{{ path('blog_delete', {'id': 'x'}) }}">
+					<li>delete</li>
+				</a>
+			</ul>
+			<ul>
+				<h2>auteur</h2>
+				<a href="{{ path('auteur_create') }}">
+					<li>create</li>
+				</a>
+				<a href="{{ path('auteur_read', {'id': 'x'}) }}">
+					<li>read</li>
+				</a>
+				<a href="{{ path('auteur_read_all') }}">
+					<li>read all</li>
+				</a>
+				<a href="{{ path('auteur_update', {'id': 'x'}) }}">
+					<li>update</li>
+				</a>
+				<a href="{{ path('auteur_delete', {'id': 'x'}) }}">
+					<li>delete</li>
+				</a>
+			</ul>
+		</nav>
+	</header>
+
