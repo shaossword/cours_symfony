@@ -2,7 +2,8 @@
 
 namespace App\Controller;
 
-
+use App\CRUD\Blog\ArticleCRUD;
+use App\Entity\Article;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 //use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -21,57 +22,42 @@ class ArticleController extends AbstractController
      */
     function CreateArticle()
     {
-        // $response = new Response();
 
-        // $content = "<html>
-        //         <body>
-        //     <h1>Create Article</h1>
-        //     <form>
-        //    titre :<input name='titre' type='text'>
-        //   contenue :<input name='contenue' type='text'>
-        //   auteur :<input name='auteur' type='text'>
-        //   date :<input name='date' type='date'>
-        //   </form>
-        //   </body>
-        //   </html>";
-        // $response->setContent($content);
-        // $response->setStatusCode(200);
-
-        // return $response;
         return $this->render('blog/articles/create.html.twig');
     }
 
     /**
-     * @Route("/Blog/ReadArticle/{id}", name="blog_read")
-     * @param $id
+     * @Route("/Blog/ReadArticle/{articleId}", name="blog_read")
+     * @param ArticleCRUD $articleCRUD
+     * @param $articleId
      * @return Response
      */
-    function ReadArticle($id)
+    function ReadArticle(ArticleCRUD $articleCRUD, $articleId)
     {
-        // $response = new Response();
+        /** @var Article $article */
+        $article = $articleCRUD->getOneById($articleId);
 
-        // $content = "<html><body>Read Article</body></html>";
-        // $response->setContent($content);
-        // $response->setStatusCode(200);
-
-        // return $response;
-        return $this->render('blog/articles/detail.html.twig');
+        return $this->render('blog/articles/detail.html.twig',
+            [
+                'article' => $article,
+            ]);
     }
+
+
 
     /**
      * @Route("/Blog/ReadArticleAll", name="blog_read_all")
+     * @param ArticleCRUD $articleCRUD
      * @return Response
      */
-    function ReadArticleAll()
+    function ReadArticleAll(ArticleCRUD $articleCRUD)
     {
-        // $response = new Response();
+        $articles = $articleCRUD->getAll();
 
-        // $content = "<html><body>Read Article All</body></html>";
-        // $response->setContent($content);
-        // $response->setStatusCode(200);
-
-        // return $response;
-        return $this->render('blog/articles/all.html.twig');
+        return $this->render('blog/articles/all.html.twig',
+            [
+                'articles' => $articles,
+            ]);
     }
 
     /**
@@ -81,13 +67,7 @@ class ArticleController extends AbstractController
      */
     function UpdateArticle($id)
     {
-        // $response = new Response();
 
-        // $content = "<html><body>Update Article</body></html>";
-        // $response->setContent($content);
-        // $response->setStatusCode(200);
-
-        // return $response;
         return $this->render('blog/articles/update.html.twig');
     }
 
@@ -98,13 +78,7 @@ class ArticleController extends AbstractController
      */
     function DeleteArticle($id)
     {
-        // $response = new Response();
 
-        // $content = "<html><body>Delete Article</body></html>";
-        // $response->setContent($content);
-        // $response->setStatusCode(200);
-
-        // return $response;
         return $this->render('blog/articles/delete.html.twig');
     }
 }

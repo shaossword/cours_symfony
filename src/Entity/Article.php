@@ -5,12 +5,12 @@ namespace App\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Class Artcile
+ * Class Article
  * @ORM\Entity(repositoryClass="App\Repository\Blog\ArticleRepository")
  * @ORM\Table(name="article")
  * @package App\Entity
  */
-class Artcile
+class Article
 {
     /**
      * @ORM\Id()
@@ -37,6 +37,13 @@ class Artcile
      * @var \DateTime
      */
     private $date;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Article",inversedBy="articles")
+     * @ORM\JoinColumn(name="auteur_id",referencedColumnName="id")
+     * @var Auteur
+     */
+    private $auteur;
 
     public function getId(): ?int
     {
@@ -75,6 +82,18 @@ class Artcile
     public function setDate(\DateTimeInterface $date): self
     {
         $this->date = $date;
+
+        return $this;
+    }
+
+    public function getAuteur(): ?self
+    {
+        return $this->auteur;
+    }
+
+    public function setAuteur(?self $auteur): self
+    {
+        $this->auteur = $auteur;
 
         return $this;
     }

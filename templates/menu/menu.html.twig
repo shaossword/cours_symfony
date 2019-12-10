@@ -1,12 +1,12 @@
 
 	<header>
-		<nav>
+		<nav class="bg-dark d-flex justify-content-around ">
 			<ul>
 				<h2>article</h2>
 				<a href="{{ path('blog_create') }}">
 					<li>create</li>
 				</a>
-				<a href="{{ path('blog_read', {'id': 'x'}) }}">
+				<a href="{{ path('blog_read', {'articleId': '1'}) }} ">
 					<li>read</li>
 				</a>
 				<a href="{{ path('blog_read_all') }}">

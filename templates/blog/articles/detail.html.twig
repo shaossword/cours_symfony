@@ -1,5 +1,11 @@
 {% extends "base.html.twig" %}
 
 {% block body %}
-	<h1>detail</h1>
+    <div class="d-flex flex-column justify-content-around align-items-center">
+        <h1>detail</h1>
+        {#<li>{{ article.id }}</li>#}
+        <h2>{{ article.title }}</h2>
+        <p>{{ article.content }}</p>
+        <p>{{ article.date|date('Y-M-D') }}</p>
+    </div>
 {% endblock %}
