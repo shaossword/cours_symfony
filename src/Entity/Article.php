@@ -39,7 +39,7 @@ class Article
     private $date;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Article",inversedBy="articles")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Auteur",inversedBy="articles")
      * @ORM\JoinColumn(name="auteur_id",referencedColumnName="id")
      * @var Auteur
      */
@@ -86,16 +86,17 @@ class Article
         return $this;
     }
 
-    public function getAuteur(): ?self
+    public function getAuteur(): ?Auteur
     {
         return $this->auteur;
     }
 
-    public function setAuteur(?self $auteur): self
+    public function setAuteur(?Auteur $auteur): self
     {
         $this->auteur = $auteur;
 
         return $this;
     }
+
 
 }

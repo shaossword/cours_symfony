@@ -1,0 +1,19 @@
+{% extends "base.html.twig" %}
+
+{% block body %}
+    <h1>all</h1>
+    <div class="contenue">
+
+        {% for auteur in auteurs %}
+            {#<li>{{ article.id }}</li>#}
+            <div class="border border-dark">
+                <h2>{{ auteur.firstName }}</h2>
+                <p>{{ auteur.lastName }}</p>
+                <a href="{{ path('auteur_update', {'auteurId': auteur.id}) }}">update</a>
+                <a href="{{ path('auteur_delete',{'auteurId': auteur.id}) }}">delete</a>
+            </div>
+
+        {% endfor %}
+
+    </div>
+{% endblock %}

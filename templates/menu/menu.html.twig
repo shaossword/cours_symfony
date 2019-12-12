@@ -6,17 +6,8 @@
 				<a href="{{ path('blog_create') }}">
 					<li>create</li>
 				</a>
-				<a href="{{ path('blog_read', {'articleId': '1'}) }} ">
-					<li>read</li>
-				</a>
 				<a href="{{ path('blog_read_all') }}">
 					<li>read all</li>
-				</a>
-				<a href="{{ path('blog_update', {'id': 'x'}) }}">
-					<li>update</li>
-				</a>
-				<a href="{{ path('blog_delete', {'id': 'x'}) }}">
-					<li>delete</li>
 				</a>
 			</ul>
 			<ul>
@@ -24,19 +15,18 @@
 				<a href="{{ path('auteur_create') }}">
 					<li>create</li>
 				</a>
-				<a href="{{ path('auteur_read', {'id': 'x'}) }}">
-					<li>read</li>
-				</a>
+
 				<a href="{{ path('auteur_read_all') }}">
 					<li>read all</li>
 				</a>
-				<a href="{{ path('auteur_update', {'id': 'x'}) }}">
-					<li>update</li>
-				</a>
-				<a href="{{ path('auteur_delete', {'id': 'x'}) }}">
-					<li>delete</li>
-				</a>
 			</ul>
+			{% if app.user %}
+				<a href="{{ path('app_logout') }}">logout</a>
+			{% else %}
+			<a href="{{ path('app_login') }}">login</a>
+			<a href="{{ path('app_register') }}">register</a>
+			{% endif %}
+
 		</nav>
 	</header>
 

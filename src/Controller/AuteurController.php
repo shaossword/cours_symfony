@@ -3,10 +3,15 @@
 namespace App\Controller;
 
 
+use App\CRUD\Blog\ArticleCRUD;
+use App\CRUD\Blog\AuteurCRUD;
+use App\Entity\Article;
+use App\Form\Blog\AuteurFormType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use App\Entity\Auteur;
 
 
 /**
@@ -17,91 +22,116 @@ class AuteurController extends AbstractController
 {
     /**
      * @Route("/Blog/CreatAuteur", name="auteur_create")
+     * @param Request $request
+     * @param AuteurCRUD $auteurCRUD
      * @return Response
      */
-    function CreatAuteur()
+    function CreatAuteur(Request $request, AuteurCRUD $auteurCRUD)
     {
-        // $response = new Response();
 
-        // $content = "<html><body></body></html>";
-        // $response->setContent($content);
-        // $response->setStatusCode(200);
+        $auteur = new Auteur();
 
-        // return $response;
-        return $this->render('blog/articles/create.html.twig');
+        $form = $this->createForm(
+            AuteurFormType::class,
+            $auteur
+        );
 
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $auteurCRUD->add($auteur);
+
+            return $this->redirectToRoute('auteur_read_all');
+        }
+
+        return $this->render('blog/auteur/create.html.twig',
+            [
+                'auteurForm' => $form->createView()
+            ]
+        );
     }
 
     /**
-     * @Route("/Blog/ReadAuteur/{id}", name="auteur_read")
-     * @param $id
+     * @Route("/Blog/ReadAuteur/{auteurId}", name="auteur_read")
+     * @param AuteurCRUD $auteurCRUD
+     * @param $auteurId
      * @return Response
-     *
      */
-    function ReadAuteur($id)
+    function ReadAuteur(AuteurCRUD $auteurCRUD, $auteurId)
     {
-        // $response = new Response();
 
-        // $content = "<html><body></body></html>";
-        // $response->setContent($content);
-        // $response->setStatusCode(200);
+        /** @var Auteur $auteur */
+        $auteur = $auteurCRUD->getOneById($auteurId);
 
-        // return $response;
-        return $this->render('blog/articles/detail.html.twig');
-
+        return $this->render('blog/auteur/detail.html.twig',
+            [
+                'auteur' => $auteur,
+            ]);
     }
 
     /**
      * @Route("/Blog/ReadAuteurAll", name="auteur_read_all")
-     * @param $id
+     * @param AuteurCRUD $auteurCRUD
      * @return Response
      */
-    function ReadAuteurAll()
+    function ReadAuteurAll(AuteurCRUD $auteurCRUD)
     {
-        // $response = new Response();
 
-        // $content = "<html><body></body></html>";
-        // $response->setContent($content);
-        // $response->setStatusCode(200);
+        $auteurs = $auteurCRUD->getAll();
 
-        // return $response;
-        return $this->render('blog/articles/all.html.twig');
+        return $this->render('blog/auteur/all.html.twig',
+            [
+                'auteurs' => $auteurs,
+            ]);
 
     }
 
     /**
-     * @Route("/Blog/UpdateAuteur/{id}", name="auteur_update")
-     * @param $id
+     * @Route("/Blog/UpdateAuteur/{auteurId}", name="auteur_update")
+     * @param AuteurCRUD $auteurCRUD
+     * @param Request $request
+     * @param $auteurId
      * @return Response
      */
-    function UpdateAuteur($id)
+    function UpdateAuteur(AuteurCRUD $auteurCRUD,Request $request,$auteurId)
     {
-        // $response = new Response();
 
-        // $content = "<html><body></body></html>";
-        // $response->setContent($content);
-        // $response->setStatusCode(200);
+        $auteur = $auteurCRUD->getOneById($auteurId);
 
-        // return $response;
-        return $this->render('blog/articles/update.html.twig');
+        $form = $this->createForm(
+            AuteurFormType::class,
+            $auteur
+        );
 
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $auteurCRUD->add($auteur);
+
+            return $this->redirectToRoute('auteur_read',['auteurId'=>$auteurId]);
+        }
+
+        return $this->render('blog/auteur/update.html.twig',
+            [
+                'auteurForm' => $form->createView()
+            ]
+        );
     }
 
     /**
-     * @Route("/Blog/DeleteAuteur/{id}", name="auteur_delete")
-     * @param $id
+     * @Route("/Blog/DeleteAuteur/{auteurId}", name="auteur_delete")
+     * @param AuteurCRUD $auteurCRUD
+     * @param $auteurId
      * @return Response
      */
-    function DeleteAuteur($id)
+    function DeleteAuteur(AuteurCRUD $auteurCRUD,$auteurId)
     {
-        // $response = new Response();
 
-        // $content = "<html><body></body></html>";
-        // $response->setContent($content);
-        // $response->setStatusCode(200);
+        $auteur = $auteurCRUD->getOneById($auteurId);
 
-        // return $response;
-        return $this->render('blog/articles/delete.html.twig');
+        $auteurCRUD->delete($auteur);
+
+        return  $this->redirectToRoute('auteur_read_all');
 
     }
 }

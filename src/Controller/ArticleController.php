@@ -4,8 +4,10 @@ namespace App\Controller;
 
 use App\CRUD\Blog\ArticleCRUD;
 use App\Entity\Article;
+use App\Form\Blog\ArticleFormType;
+use App\Form\Blog\AuteurFormType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-//use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -18,12 +20,32 @@ class ArticleController extends AbstractController
 {
     /**
      * @Route("/Blog/CreateArticle", name="blog_create")
+     * @param Request $request
+     * @param ArticleCRUD $articleCRUD
      * @return Response
      */
-    function CreateArticle()
+    function CreateArticle(Request $request, ArticleCRUD $articleCRUD)
     {
+        $article = new Article();
 
-        return $this->render('blog/articles/create.html.twig');
+        $form = $this->createForm(
+            ArticleFormType::class,
+            $article
+        );
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $articleCRUD->add($article);
+
+            return $this->redirectToRoute('blog_read_all');
+        }
+
+        return $this->render('blog/articles/create.html.twig',
+            [
+                'articleForm' => $form->createView()
+            ]
+        );
     }
 
     /**
@@ -61,24 +83,49 @@ class ArticleController extends AbstractController
     }
 
     /**
-     * @Route("/Blog/UpdateArticle/{id}", name="blog_update")
-     * @param $id
+     * @Route("/Blog/UpdateArticle/{articleId}", name="blog_update")
+     * @param ArticleCRUD $articleCRUD
+     * @param Request $request
+     * @param $articleId
      * @return Response
      */
-    function UpdateArticle($id)
+    function UpdateArticle(ArticleCRUD $articleCRUD,Request $request,$articleId)
     {
+        $article = $articleCRUD->getOneById($articleId);
 
-        return $this->render('blog/articles/update.html.twig');
+        $form = $this->createForm(
+            ArticleFormType::class,
+            $article
+        );
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $articleCRUD->add($article);
+
+            return $this->redirectToRoute('blog_read',['articleId'=>$articleId]);
+        }
+
+        return $this->render('blog/articles/update.html.twig',
+            [
+                'articleForm' => $form->createView()
+            ]
+        );
     }
 
     /**
-     * @Route("/Blog/DeleteArticle/{id}", name="blog_delete")
-     * @param $id
+     * @Route("/Blog/DeleteArticle/{articleId}", name="blog_delete")
+     * @param ArticleCRUD $articleCRUD
+     * @param $articleId
      * @return Response
      */
-    function DeleteArticle($id)
+    function DeleteArticle(ArticleCRUD $articleCRUD,$articleId)
     {
 
-        return $this->render('blog/articles/delete.html.twig');
+        $article= $articleCRUD->getOneById($articleId);
+
+        $articleCRUD->delete($article);
+
+        return  $this->redirectToRoute('blog_read');
     }
 }

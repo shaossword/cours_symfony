@@ -9,7 +9,8 @@
                 <h2>{{ article.title }}</h2>
                 <p>{{ article.content }}</p>
                 <p>{{ article.date|date('Y-M-D') }}</p>
-
+                <a href="{{ path('blog_update', {'articleId': article.id}) }}">update</a>
+                <a href="{{ path('blog_delete',{'articleId': article.id}) }}">delete</a>
             {% endfor %}
         </ul>
     </div>
