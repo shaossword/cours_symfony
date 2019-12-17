@@ -2,19 +2,13 @@
 
 namespace App\Tests\CRUD\Blog;
 
-use App\Entity\Article;
-use App\CRUD\Blog\ArticleCRUD;
+
 use App\CRUD\Blog\AuteurCRUD;
 use App\Entity\Auteur;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 class AuteurCRUDTest extends WebTestCase
 {
-
-    /**
-     * @var ArticleCRUD
-     */
-    private $articleCRUD;
 
     /**
      * @var AuteurCRUD
@@ -25,8 +19,6 @@ class AuteurCRUDTest extends WebTestCase
     {
         self::bootKernel();
         $container = self::$container;
-
-        $this->articleCRUD = $container->get(ArticleCRUD::class);
 
         $this->auteurCRUD = $container->get(AuteurCRUD::class);
     }
@@ -49,6 +41,7 @@ class AuteurCRUDTest extends WebTestCase
         $this->assertEquals($auteur->getFirstName(), $auteurFromDb->getFirstName());
     }
 
+
     /**
      * @test
      */
@@ -63,10 +56,13 @@ class AuteurCRUDTest extends WebTestCase
         $this->auteurCRUD->add($auteur);
 
         $auteurFromDb = $this->auteurCRUD->getOneById($auteur->getId());
+
         $this->auteurCRUD->delete($auteur);
+
 
         $this->assertNotEmpty($auteurFromDb, $message = "Auteur supprimé");
     }
+
 
     /**
      * @test

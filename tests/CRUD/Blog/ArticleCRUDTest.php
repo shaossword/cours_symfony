@@ -35,8 +35,8 @@ class ArticleCRUDTest extends WebTestCase
      */
     public function testAddSuccessfulArticle()
     {
-        $auteur = $this->auteurCRUD->getAll();
-        $auteur = $auteur[0];
+        $auteurs = $this->auteurCRUD->getAll();
+        $auteur = $auteurs[0];
 
         $article = new Article();
         $article->setTitle("test title");

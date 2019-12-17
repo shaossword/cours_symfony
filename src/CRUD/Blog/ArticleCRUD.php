@@ -50,7 +50,7 @@ class ArticleCRUD
     }
 
     /**
-     * @return array
+     * @return Article[]|array
      */
     public function getAll(): array
     {

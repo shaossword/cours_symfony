@@ -50,7 +50,7 @@ class AuteurCRUD
     }
 
     /**
-     * @return array
+     * @return Auteur[]|array
      */
     public function getAll(): array
     {
